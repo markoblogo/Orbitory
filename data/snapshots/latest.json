@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-05-13T19:36:56.027Z",
+  "resourcesChecked": 5,
+  "pagesFetched": 10,
+  "foundEdges": [],
+  "pageStatuses": [
+    {
+      "resourceId": "atlas-blog",
+      "requestedUrl": "https://blog.atlas-labs.example/",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    },
+    {
+      "resourceId": "atlas-blog",
+      "requestedUrl": "https://blog.atlas-labs.example/archive",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    },
+    {
+      "resourceId": "atlas-home",
+      "requestedUrl": "https://demo.atlas-labs.example/",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    },
+    {
+      "resourceId": "atlas-home",
+      "requestedUrl": "https://demo.atlas-labs.example/contact",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    },
+    {
+      "resourceId": "atlas-home",
+      "requestedUrl": "https://demo.atlas-labs.example/projects",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    },
+    {
+      "resourceId": "northstar-home",
+      "requestedUrl": "https://northstar-notes.example/",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    },
+    {
+      "resourceId": "northstar-home",
+      "requestedUrl": "https://northstar-notes.example/about",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    },
+    {
+      "resourceId": "northstar-home",
+      "requestedUrl": "https://northstar-notes.example/notes",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    },
+    {
+      "resourceId": "northstar-newsletter",
+      "requestedUrl": "https://dispatch.northstar-notes.example/",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    },
+    {
+      "resourceId": "orbitory-landing",
+      "requestedUrl": "https://orbitory-demo.example/",
+      "ok": false,
+      "redirected": false,
+      "linksExtracted": 0,
+      "knownLinksFound": 0,
+      "error": "fetch failed"
+    }
+  ],
+  "issues": [
+    {
+      "type": "fetch_error",
+      "resourceId": "atlas-blog",
+      "url": "https://blog.atlas-labs.example/",
+      "message": "fetch failed"
+    },
+    {
+      "type": "fetch_error",
+      "resourceId": "atlas-blog",
+      "url": "https://blog.atlas-labs.example/archive",
+      "message": "fetch failed"
+    },
+    {
+      "type": "resource_not_crawled",
+      "resourceId": "atlas-blog",
+      "url": "https://blog.atlas-labs.example/",
+      "message": "No configured pages could be crawled for resource \"atlas-blog\"."
+    },
+    {
+      "type": "fetch_error",
+      "resourceId": "atlas-home",
+      "url": "https://demo.atlas-labs.example/",
+      "message": "fetch failed"
+    },
+    {
+      "type": "fetch_error",
+      "resourceId": "atlas-home",
+      "url": "https://demo.atlas-labs.example/contact",
+      "message": "fetch failed"
+    },
+    {
+      "type": "fetch_error",
+      "resourceId": "atlas-home",
+      "url": "https://demo.atlas-labs.example/projects",
+      "message": "fetch failed"
+    },
+    {
+      "type": "resource_not_crawled",
+      "resourceId": "atlas-home",
+      "url": "https://demo.atlas-labs.example/",
+      "message": "No configured pages could be crawled for resource \"atlas-home\"."
+    },
+    {
+      "type": "fetch_error",
+      "resourceId": "northstar-home",
+      "url": "https://northstar-notes.example/",
+      "message": "fetch failed"
+    },
+    {
+      "type": "fetch_error",
+      "resourceId": "northstar-home",
+      "url": "https://northstar-notes.example/about",
+      "message": "fetch failed"
+    },
+    {
+      "type": "fetch_error",
+      "resourceId": "northstar-home",
+      "url": "https://northstar-notes.example/notes",
+      "message": "fetch failed"
+    },
+    {
+      "type": "resource_not_crawled",
+      "resourceId": "northstar-home",
+      "url": "https://northstar-notes.example/",
+      "message": "No configured pages could be crawled for resource \"northstar-home\"."
+    },
+    {
+      "type": "fetch_error",
+      "resourceId": "northstar-newsletter",
+      "url": "https://dispatch.northstar-notes.example/",
+      "message": "fetch failed"
+    },
+    {
+      "type": "resource_not_crawled",
+      "resourceId": "northstar-newsletter",
+      "url": "https://dispatch.northstar-notes.example/",
+      "message": "No configured pages could be crawled for resource \"northstar-newsletter\"."
+    },
+    {
+      "type": "fetch_error",
+      "resourceId": "orbitory-landing",
+      "url": "https://orbitory-demo.example/",
+      "message": "fetch failed"
+    },
+    {
+      "type": "resource_not_crawled",
+      "resourceId": "orbitory-landing",
+      "url": "https://orbitory-demo.example/",
+      "message": "No configured pages could be crawled for resource \"orbitory-landing\"."
+    }
+  ]
+}

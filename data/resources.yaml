@@ -1,0 +1,173 @@
+projects:
+  - id: atlas-labs
+    name: Atlas Labs
+    description: Demo project for a personal software studio ecosystem.
+    tags:
+      - studio
+      - software
+      - demo
+  - id: northstar-field-notes
+    name: Northstar Field Notes
+    description: Demo publishing project for essays, videos, and updates.
+    tags:
+      - writing
+      - media
+      - demo
+  - id: orbitory-demo
+    name: Orbitory Demo
+    description: Public sample data used to exercise the Orbitory MVP.
+    tags:
+      - orbitory
+      - sample
+      - demo
+
+resources:
+  - id: atlas-home
+    name: Atlas Labs Website
+    url: https://demo.atlas-labs.example/
+    type: website
+    projectId: atlas-labs
+    owner: mine
+    priority: critical
+    status: active
+    editable: true
+    tags:
+      - primary
+      - studio
+    crawl:
+      enabled: true
+      paths:
+        - /
+        - /projects
+        - /contact
+  - id: atlas-blog
+    name: Atlas Labs Blog
+    url: https://blog.atlas-labs.example/
+    type: blog
+    projectId: atlas-labs
+    owner: mine
+    priority: high
+    status: active
+    editable: true
+    tags:
+      - writing
+      - updates
+    crawl:
+      enabled: true
+      paths:
+        - /
+        - /archive
+  - id: atlas-github
+    name: Atlas Labs GitHub
+    url: https://github.com/example-atlas-labs
+    type: github
+    projectId: atlas-labs
+    owner: mine
+    priority: medium
+    status: active
+    editable: true
+    tags:
+      - code
+      - public
+    crawl:
+      enabled: false
+  - id: northstar-home
+    name: Northstar Field Notes
+    url: https://northstar-notes.example/
+    type: website
+    projectId: northstar-field-notes
+    owner: mine
+    priority: high
+    status: active
+    editable: true
+    tags:
+      - publication
+      - essays
+    crawl:
+      enabled: true
+      paths:
+        - /
+        - /about
+        - /notes
+  - id: northstar-newsletter
+    name: Northstar Dispatch
+    url: https://dispatch.northstar-notes.example/
+    type: newsletter
+    projectId: northstar-field-notes
+    owner: mine
+    priority: medium
+    status: active
+    editable: true
+    tags:
+      - newsletter
+      - subscribers
+    crawl:
+      enabled: true
+      paths:
+        - /
+  - id: northstar-video
+    name: Northstar Video Channel
+    url: https://video.example.com/northstar-field-notes
+    type: video
+    projectId: northstar-field-notes
+    owner: external
+    priority: medium
+    status: active
+    editable: false
+    tags:
+      - video
+      - channel
+    crawl:
+      enabled: false
+  - id: orbitory-landing
+    name: Orbitory Landing Page
+    url: https://orbitory-demo.example/
+    type: landing
+    projectId: orbitory-demo
+    owner: mine
+    priority: high
+    status: active
+    editable: true
+    tags:
+      - product
+      - demo
+    crawl:
+      enabled: true
+      paths:
+        - /
+  - id: friendly-directory
+    name: Friendly Tools Directory
+    url: https://directory.example/tools/orbitory
+    type: directory
+    projectId: orbitory-demo
+    owner: partner
+    priority: low
+    status: unknown
+    editable: false
+    tags:
+      - listing
+      - partner
+    crawl:
+      enabled: false
+
+manualEdges:
+  - from: atlas-home
+    to: atlas-blog
+    type: known
+    note: Main website links to the studio blog.
+  - from: atlas-blog
+    to: atlas-github
+    type: intended
+    note: Technical posts should point readers to public repositories.
+  - from: northstar-home
+    to: northstar-newsletter
+    type: known
+    note: Publication homepage promotes the newsletter.
+  - from: northstar-newsletter
+    to: northstar-video
+    type: related
+    note: Newsletter and channel cover the same editorial project.
+  - from: orbitory-landing
+    to: friendly-directory
+    type: partner
+    note: Demo landing page is listed in a partner directory.
