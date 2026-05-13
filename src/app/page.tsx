@@ -2,6 +2,7 @@ import { DashboardSection } from "@/components/dashboard-section";
 import {
   EcosystemGraphView,
   IssuesPanel,
+  RecommendationsPanel,
   SnapshotSummaryPanel,
 } from "@/components/ecosystem-graph";
 import { buildGraph } from "@/lib/buildGraph";
@@ -17,119 +18,175 @@ export default function Home() {
   const graph = buildGraph(orbitoryData, snapshot);
   const resourceGroups = groupResourcesByProject(orbitoryData);
   const stats = [
-    { label: "Projects", value: orbitoryData.projects.length },
     { label: "Resources", value: orbitoryData.resources.length },
-    { label: "Manual edges", value: orbitoryData.manualEdges.length },
+    { label: "Groups", value: orbitoryData.projects.length },
+    { label: "Links", value: graph.edges.length },
+    {
+      label: graph.snapshotSummary.generatedAt ? "Snapshot" : "Issues",
+      value: graph.snapshotSummary.generatedAt
+        ? new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(
+            new Date(graph.snapshotSummary.generatedAt),
+          )
+        : graph.issues.length,
+    },
   ];
 
   return (
     <main className="min-h-screen bg-[#f7f4ed] text-[#161513]">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-8 sm:px-10 lg:px-12">
-        <header className="flex items-center justify-between border-b border-[#d8d1c4] pb-5">
-          <p className="text-xl font-semibold tracking-tight">Orbitory</p>
-          <p className="hidden text-sm text-[#6f6658] sm:block">
-            Local-first ecosystem visibility
-          </p>
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-5 sm:px-6 lg:px-8">
+        <header className="flex items-center justify-between border-b border-[#d8d1c4] pb-4">
+          <p className="text-lg font-semibold tracking-tight">Orbitory</p>
+          <nav className="flex items-center gap-4 text-xs font-medium uppercase tracking-wide text-[#6f6658]">
+            <span>Private mode</span>
+            <a className="underline-offset-4 hover:underline" href="/public">
+              Public view
+            </a>
+          </nav>
         </header>
 
-        <section className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-              A personal ecosystem map for everything you own online.
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#5f574c]">
-              Orbitory keeps a local, inspectable map of websites, blogs,
-              social profiles, channels, partner pages, and the links between
-              them so gaps and broken connections are easy to spot.
-            </p>
-          </div>
+        <section className="min-h-[calc(100vh-6rem)] space-y-4">
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <div>
+              <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+                Personal ecosystem map
+              </h1>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-[#5f574c]">
+                A local visual universe of owned sites, profiles, channels,
+                platforms, and the connections between them.
+              </p>
+            </div>
 
-          <div className="rounded-lg border border-[#d8d1c4] bg-[#fffdf8] p-5 shadow-sm">
-            <p className="text-sm font-medium text-[#6f6658]">MVP scope</p>
-            <dl className="mt-4 grid grid-cols-3 gap-4">
+            <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:min-w-[460px]">
               {stats.map((stat) => (
-                <div key={stat.label}>
-                  <dt className="text-xs uppercase tracking-wide text-[#8c8170]">
+                <div
+                  key={stat.label}
+                  className="rounded-md border border-[#d8d1c4] bg-[#fffdf8] px-3 py-2"
+                >
+                  <dt className="text-[0.65rem] uppercase tracking-wide text-[#8c8170]">
                     {stat.label}
                   </dt>
-                  <dd className="mt-1 text-2xl font-semibold">{stat.value}</dd>
+                  <dd className="mt-1 text-lg font-semibold">{stat.value}</dd>
                 </div>
               ))}
             </dl>
           </div>
+
+          <EcosystemGraphView graph={graph} />
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        <section className="space-y-4">
           <DashboardSection
-            title="Ecosystem graph"
-            description="Resources render as nodes, and manual edges render as deterministic local graph connections."
-          >
-            <EcosystemGraphView graph={graph} />
-          </DashboardSection>
-
-          <DashboardSection
-            title="Snapshot summary"
-            description="Latest local crawler snapshot status. No network calls are made by the UI."
+            title="Snapshot"
+            description="Latest local crawler summary."
           >
             <SnapshotSummaryPanel graph={graph} />
           </DashboardSection>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <DashboardSection
+              title="Issues"
+              description="Top audit findings grouped by type."
+            >
+              <IssuesPanel issues={graph.issues} />
+            </DashboardSection>
+
+            <DashboardSection
+              title="Recommendations"
+              description="Top deterministic rule-based suggestions."
+            >
+              <RecommendationsPanel issues={graph.issues} />
+            </DashboardSection>
+          </div>
+
+          <DashboardSection
+            title="Resources by project"
+            description="Dense local inventory summary."
+          >
+            <ResourceGroupsSummary groups={resourceGroups} />
+          </DashboardSection>
         </section>
-
-        <DashboardSection
-          title="Issues"
-          description="Derived from local resources, manual edges, and the latest crawler snapshot."
-        >
-          <IssuesPanel issues={graph.issues} />
-        </DashboardSection>
-
-        <DashboardSection
-          title="Resources by project"
-          description="This list is loaded from the local YAML dataset and grouped by configured project."
-        >
-          {resourceGroups.length > 0 ? (
-            <div className="grid gap-4 lg:grid-cols-3">
-              {resourceGroups.map((group) => (
-                <div
-                  key={group.project?.id ?? "unassigned"}
-                  className="rounded-md border border-[#d8d1c4] bg-[#fcfaf4] p-4"
-                >
-                  <h3 className="font-medium">
-                    {group.project?.name ?? "Unassigned"}
-                  </h3>
-                  {group.project?.description ? (
-                    <p className="mt-1 text-sm leading-6 text-[#6f6658]">
-                      {group.project.description}
-                    </p>
-                  ) : null}
-                  <ul className="mt-4 space-y-3">
-                    {group.resources.map((resource) => (
-                      <li key={resource.id}>
-                        <a
-                          className="break-words text-sm font-medium underline-offset-4 hover:underline"
-                          href={resource.url}
-                        >
-                          {resource.name}
-                        </a>
-                        <p className="mt-1 text-xs uppercase tracking-wide text-[#8c8170]">
-                          {resource.type} / {resource.owner} /{" "}
-                          {resource.priority}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="rounded-md border border-[#d8d1c4] bg-[#fcfaf4] p-4 text-sm text-[#6f6658]">
-              No resources are configured yet. Add resources to
-              <code className="font-mono"> data/resources.yaml</code> or
-              <code className="font-mono"> data/resources.local.yaml</code>,
-              then run <code className="font-mono">npm run validate:data</code>.
-            </p>
-          )}
-        </DashboardSection>
       </div>
     </main>
   );
+}
+
+type ResourceGroups = ReturnType<typeof groupResourcesByProject>;
+
+function ResourceGroupsSummary({ groups }: { groups: ResourceGroups }) {
+  if (groups.length === 0) {
+    return (
+      <p className="rounded-md border border-[#d8d1c4] bg-[#fcfaf4] p-3 text-sm text-[#6f6658]">
+        No resources are configured yet. Add resources to
+        <code className="font-mono"> data/resources.yaml</code> or
+        <code className="font-mono"> data/resources.local.yaml</code>, then run
+        <code className="font-mono"> npm run validate:data</code>.
+      </p>
+    );
+  }
+
+  return (
+    <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-4">
+      {groups.map((group) => {
+        const keyResources = group.resources
+          .slice()
+          .sort((first, second) => priorityRank(second.priority) - priorityRank(first.priority))
+          .slice(0, 4);
+
+        return (
+          <article
+            key={group.project?.id ?? "unassigned"}
+            className="rounded-md border border-[#d8d1c4] bg-[#fcfaf4] p-3"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h3 className="text-sm font-semibold">
+                  {group.project?.name ?? "Unassigned"}
+                </h3>
+                <p className="mt-1 text-xs uppercase tracking-wide text-[#8c8170]">
+                  {group.resources.length} resources
+                </p>
+              </div>
+              <span className="rounded-full border border-[#d8d1c4] px-2 py-0.5 text-xs text-[#6f6658]">
+                {group.project?.visibility ?? "mixed"}
+              </span>
+            </div>
+
+            <ul className="mt-3 space-y-1.5">
+              {keyResources.map((resource) => (
+                <li
+                  key={resource.id}
+                  className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 text-xs"
+                >
+                  <a
+                    className="truncate font-medium underline-offset-4 hover:underline"
+                    href={resource.url}
+                  >
+                    {resource.name}
+                  </a>
+                  <span className="text-[#8c8170]">{resource.type}</span>
+                </li>
+              ))}
+            </ul>
+
+            {group.resources.length > keyResources.length ? (
+              <p className="mt-2 text-xs text-[#8c8170]">
+                +{group.resources.length - keyResources.length} more
+              </p>
+            ) : null}
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+function priorityRank(priority: string) {
+  const ranks: Record<string, number> = {
+    low: 1,
+    medium: 2,
+    high: 3,
+    critical: 4,
+  };
+
+  return ranks[priority] ?? 0;
 }

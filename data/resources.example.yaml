@@ -59,7 +59,16 @@ manualEdges:
     to: example-blog
     type: known
     note: Example homepage links to the blog.
+    evidence:
+      - sourceUrl: https://example.com/writing
+        targetUrl: https://blog.example.com/
+        context: Internal writing page links to the blog profile.
+        anchorText: Read the blog
   - from: example-home
     to: example-partner
     type: partner
     note: Example unlisted partner relationship.
+    evidence:
+      - sourceUrl: https://example.com/partners
+        targetUrl: https://partner.example/listings/example
+        context: Partner listing is evidence for the platform relationship.

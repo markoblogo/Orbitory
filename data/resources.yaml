@@ -1,106 +1,123 @@
 projects:
-  - id: atlas-labs
-    name: Atlas Labs
-    description: Demo project for a personal software studio ecosystem.
+  - id: abvx
+    name: ABVX
+    description: Main public ecosystem surface and working index.
     visibility: public
     tags:
-      - studio
-      - software
-      - demo
-  - id: northstar-field-notes
-    name: Northstar Field Notes
-    description: Demo publishing project for essays, videos, and updates.
+      - personal
+      - ecosystem
+      - index
+  - id: orbitory
+    name: Orbitory
+    description: Public destination for the Orbitory ecosystem map.
+    visibility: public
+    tags:
+      - tool
+      - graph
+      - ecosystem
+  - id: code
+    name: Code
+    description: Public source and development profile.
+    visibility: public
+    tags:
+      - code
+      - open-source
+  - id: writing
+    name: Writing
+    description: Public writing and publication profiles.
     visibility: public
     tags:
       - writing
-      - media
-      - demo
-  - id: orbitory-demo
-    name: Orbitory Demo
-    description: Public sample data used to exercise the Orbitory MVP.
+      - essays
+  - id: social
+    name: Social Presence
+    description: Public social profiles and channels.
     visibility: public
     tags:
-      - orbitory
-      - sample
-      - demo
+      - social
+      - channels
+  - id: publishing
+    name: Publishing Platforms
+    description: Major destinations where books or publications may be found.
+    visibility: public
+    tags:
+      - books
+      - platforms
 
 resources:
-  - id: atlas-home
-    name: Atlas Labs Website
-    url: https://demo.atlas-labs.example/
+  - id: abvx-home
+    name: ABVX
+    url: https://abvx.xyz/
     type: website
-    projectId: atlas-labs
+    projectId: abvx
     owner: mine
     visibility: public
     priority: critical
     status: active
     editable: true
     tags:
-      - primary
-      - studio
+      - home
+      - index
+      - ecosystem
     crawl:
       enabled: true
       paths:
         - /
-        - /projects
-        - /contact
-  - id: atlas-blog
-    name: Atlas Labs Blog
-    url: https://blog.atlas-labs.example/
-    type: blog
-    projectId: atlas-labs
+        - /systems
+        - /writing
+        - /books
+  - id: orbitory-public
+    name: Orbitory
+    url: https://orbitory.abvx.xyz/
+    type: website
+    projectId: orbitory
     owner: mine
     visibility: public
     priority: high
     status: active
     editable: true
     tags:
-      - writing
-      - updates
+      - ecosystem-map
+      - tool
+      - public
     crawl:
-      enabled: true
-      paths:
-        - /
-        - /archive
-  - id: atlas-github
-    name: Atlas Labs GitHub
-    url: https://github.com/example-atlas-labs
+      enabled: false
+  - id: github-markoblogo
+    name: GitHub Profile
+    url: https://github.com/markoblogo
     type: github
-    projectId: atlas-labs
+    projectId: code
+    owner: mine
+    visibility: public
+    priority: high
+    status: active
+    editable: true
+    tags:
+      - code
+      - repositories
+      - open-source
+    crawl:
+      enabled: false
+  - id: medium-profile
+    name: Medium Profile
+    url: https://medium.com/@markoblogo
+    type: blog
+    projectId: writing
     owner: mine
     visibility: public
     priority: medium
     status: active
     editable: true
     tags:
-      - code
-      - public
-    crawl:
-      enabled: false
-  - id: northstar-home
-    name: Northstar Field Notes
-    url: https://northstar-notes.example/
-    type: website
-    projectId: northstar-field-notes
-    owner: mine
-    visibility: public
-    priority: high
-    status: active
-    editable: true
-    tags:
-      - publication
+      - writing
       - essays
     crawl:
-      enabled: true
-      paths:
-        - /
-        - /about
-        - /notes
-  - id: northstar-newsletter
-    name: Northstar Dispatch
-    url: https://dispatch.northstar-notes.example/
+      enabled: false
+  - id: substack-publication
+    name: Substack Publication
+    url: https://abvx.substack.com/
     type: newsletter
-    projectId: northstar-field-notes
+    projectId: writing
     owner: mine
     visibility: public
     priority: medium
@@ -108,77 +125,174 @@ resources:
     editable: true
     tags:
       - newsletter
-      - subscribers
+      - writing
     crawl:
-      enabled: true
-      paths:
-        - /
-  - id: northstar-video
-    name: Northstar Video Channel
-    url: https://video.example.com/northstar-field-notes
-    type: video
-    projectId: northstar-field-notes
-    owner: external
-    visibility: unlisted
+      enabled: false
+  - id: linkedin-profile
+    name: LinkedIn Profile
+    url: https://www.linkedin.com/in/markoblogo/
+    type: social
+    projectId: social
+    owner: mine
+    visibility: public
     priority: medium
     status: active
-    editable: false
+    editable: true
+    tags:
+      - social
+      - professional
+    crawl:
+      enabled: false
+  - id: x-profile
+    name: X Profile
+    url: https://x.com/markoblogo
+    type: social
+    projectId: social
+    owner: mine
+    visibility: public
+    priority: medium
+    status: active
+    editable: true
+    tags:
+      - social
+      - updates
+    crawl:
+      enabled: false
+  - id: bluesky-profile
+    name: Bluesky Profile
+    url: https://bsky.app/profile/markoblogo.bsky.social
+    type: social
+    projectId: social
+    owner: mine
+    visibility: public
+    priority: medium
+    status: active
+    editable: true
+    tags:
+      - social
+      - updates
+    crawl:
+      enabled: false
+  - id: youtube-channel
+    name: YouTube Channel
+    url: https://www.youtube.com/@markoblogo
+    type: video
+    projectId: social
+    owner: mine
+    visibility: public
+    priority: medium
+    status: unknown
+    editable: true
     tags:
       - video
       - channel
     crawl:
       enabled: false
-  - id: orbitory-landing
-    name: Orbitory Landing Page
-    url: https://orbitory-demo.example/
-    type: landing
-    projectId: orbitory-demo
+  - id: telegram-channel
+    name: Telegram Channel
+    url: https://t.me/markoblogo
+    type: social
+    projectId: social
     owner: mine
     visibility: public
-    priority: high
-    status: active
-    editable: true
-    tags:
-      - product
-      - demo
-    crawl:
-      enabled: true
-      paths:
-        - /
-  - id: friendly-directory
-    name: Friendly Tools Directory
-    url: https://directory.example/tools/orbitory
-    type: directory
-    projectId: orbitory-demo
-    owner: partner
-    visibility: unlisted
     priority: low
     status: unknown
+    editable: true
+    tags:
+      - social
+      - channel
+    crawl:
+      enabled: false
+  - id: amazon-platform
+    name: Amazon
+    url: https://www.amazon.com/
+    type: partner
+    projectId: publishing
+    owner: external
+    visibility: public
+    priority: low
+    status: active
     editable: false
     tags:
-      - listing
-      - partner
+      - books
+      - marketplace
+      - platform
     crawl:
       enabled: false
 
 manualEdges:
-  - from: atlas-home
-    to: atlas-blog
+  - from: abvx-home
+    to: orbitory-public
+    type: owned-by
+    note: Orbitory is part of the ABVX ecosystem.
+    evidence:
+      - sourceUrl: https://abvx.xyz/systems
+        targetUrl: https://orbitory.abvx.xyz/
+        context: Systems catalogue references Orbitory as an ecosystem tool.
+  - from: abvx-home
+    to: github-markoblogo
     type: known
-    note: Main website links to the studio blog.
-  - from: atlas-blog
-    to: atlas-github
-    type: intended
-    note: Technical posts should point readers to public repositories.
-  - from: northstar-home
-    to: northstar-newsletter
+    note: ABVX work links to public source and development activity through the GitHub profile.
+    evidence:
+      - sourceUrl: https://abvx.xyz/systems
+        targetUrl: https://github.com/markoblogo
+        context: Repositories are treated as evidence under the GitHub profile resource.
+      - sourceUrl: https://abvx.xyz/projects
+        targetUrl: https://github.com/markoblogo
+        context: Project references point back to the profile rather than individual repository nodes.
+  - from: abvx-home
+    to: medium-profile
     type: known
-    note: Publication homepage promotes the newsletter.
-  - from: northstar-newsletter
-    to: northstar-video
-    type: related
-    note: Newsletter and channel cover the same editorial project.
-  - from: orbitory-landing
-    to: friendly-directory
+    note: ABVX writing points readers to a publication profile.
+    evidence:
+      - sourceUrl: https://abvx.xyz/writing
+        targetUrl: https://medium.com/@markoblogo
+        context: Individual articles are represented as context, not resources.
+  - from: abvx-home
+    to: substack-publication
+    type: known
+    note: Newsletter/publication activity is represented by the Substack profile.
+    evidence:
+      - sourceUrl: https://abvx.xyz/writing
+        targetUrl: https://abvx.substack.com/
+        context: Writing page references newsletter/publication destination.
+  - from: abvx-home
+    to: amazon-platform
     type: partner
-    note: Demo landing page is listed in a partner directory.
+    note: Books may link to Amazon as a platform destination.
+    evidence:
+      - sourceUrl: https://abvx.xyz/books
+        targetUrl: https://www.amazon.com/
+        context: Individual books are evidence for the Amazon platform relationship.
+  - from: abvx-home
+    to: linkedin-profile
+    type: known
+    note: Public professional profile.
+    evidence:
+      - sourceUrl: https://abvx.xyz/about
+        targetUrl: https://www.linkedin.com/in/markoblogo/
+        context: Profile/contact area.
+  - from: abvx-home
+    to: x-profile
+    type: known
+    note: Public social profile.
+    evidence:
+      - sourceUrl: https://abvx.xyz/about
+        targetUrl: https://x.com/markoblogo
+        context: Profile/contact area.
+  - from: abvx-home
+    to: bluesky-profile
+    type: known
+    note: Public social profile.
+    evidence:
+      - sourceUrl: https://abvx.xyz/about
+        targetUrl: https://bsky.app/profile/markoblogo.bsky.social
+        context: Profile/contact area.
+  - from: github-markoblogo
+    to: orbitory-public
+    type: intended
+    note: GitHub profile should surface the Orbitory destination once public.
+    evidence:
+      - sourceUrl: https://github.com/markoblogo
+        targetUrl: https://orbitory.abvx.xyz/
+        context: Intended profile link; individual repositories stay under the GitHub profile node.

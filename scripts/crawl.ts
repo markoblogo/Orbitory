@@ -24,6 +24,15 @@ type FoundEdge = {
   sourceUrl: string;
   linkUrl: string;
   normalizedLinkUrl: string;
+  anchorText?: string;
+  context?: string;
+  discoveredAt?: string;
+};
+
+type ExtractedLink = {
+  url: string;
+  context: string;
+  anchorText?: string;
 };
 
 type PageStatus = {
@@ -59,6 +68,7 @@ type CrawlSnapshot = {
 
 async function main() {
   const data = loadResources(DATA_PATH);
+  const generatedAt = new Date().toISOString();
   const targets = buildCrawlTargets(data);
   const crawlEnabledResourceCount = data.resources.filter(
     (resource) => resource.crawl.enabled,
@@ -81,8 +91,8 @@ async function main() {
     const extractedLinks = extractHtmlLinks(pageResult.html, pageResult.pageStatus.finalUrl ?? target.url);
     const matchedResourceIds = new Set<string>();
 
-    for (const linkUrl of extractedLinks) {
-      const match = matchKnownResource(linkUrl);
+    for (const link of extractedLinks) {
+      const match = matchKnownResource(link.url);
 
       if (!match || match.resource.id === target.resource.id) {
         continue;
@@ -94,8 +104,11 @@ async function main() {
         from: target.resource.id,
         to: match.resource.id,
         sourceUrl: target.url,
-        linkUrl,
+        linkUrl: link.url,
         normalizedLinkUrl: match.normalizedUrl,
+        anchorText: link.anchorText,
+        context: link.context,
+        discoveredAt: generatedAt,
       };
 
       foundEdges.set(
@@ -126,7 +139,7 @@ async function main() {
     });
 
   const snapshot: CrawlSnapshot = {
-    generatedAt: new Date().toISOString(),
+    generatedAt,
     resourcesChecked: crawlEnabledResourceCount,
     pagesFetched: pageStatuses.length,
     foundEdges: [...foundEdges.values()].sort(sortFoundEdges),
@@ -297,29 +310,45 @@ function addIssuesForPageStatus(pageStatus: PageStatus, issues: CrawlIssue[]) {
   }
 }
 
-function extractHtmlLinks(html: string, baseUrl: string): string[] {
-  const urls = new Set<string>();
+function extractHtmlLinks(html: string, baseUrl: string): ExtractedLink[] {
+  const linksByUrl = new Map<string, ExtractedLink>();
 
-  for (const match of html.matchAll(/\shref\s*=\s*["']([^"']+)["']/gi)) {
-    addResolvedUrl(urls, match[1], baseUrl);
+  for (const match of html.matchAll(
+    /<a\b[^>]*\shref\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi,
+  )) {
+    addResolvedUrl(linksByUrl, match[1], baseUrl, {
+      context: "href",
+      anchorText: cleanText(match[2]),
+    });
   }
 
   for (const match of html.matchAll(
     /<link\b(?=[^>]*\brel\s*=\s*["'][^"']*\bcanonical\b[^"']*["'])(?=[^>]*\bhref\s*=\s*["']([^"']+)["'])[^>]*>/gi,
   )) {
-    addResolvedUrl(urls, match[1], baseUrl);
+    addResolvedUrl(linksByUrl, match[1], baseUrl, {
+      context: "canonical",
+    });
   }
 
   for (const match of html.matchAll(
     /<meta\b(?=[^>]*(?:\bproperty|\bname)\s*=\s*["']og:url["'])(?=[^>]*\bcontent\s*=\s*["']([^"']+)["'])[^>]*>/gi,
   )) {
-    addResolvedUrl(urls, match[1], baseUrl);
+    addResolvedUrl(linksByUrl, match[1], baseUrl, {
+      context: "og:url",
+    });
   }
 
-  return [...urls].sort();
+  return [...linksByUrl.values()].sort((first, second) =>
+    first.url.localeCompare(second.url),
+  );
 }
 
-function addResolvedUrl(urls: Set<string>, rawUrl: string | undefined, baseUrl: string) {
+function addResolvedUrl(
+  linksByUrl: Map<string, ExtractedLink>,
+  rawUrl: string | undefined,
+  baseUrl: string,
+  link: Omit<ExtractedLink, "url">,
+) {
   if (!rawUrl || rawUrl.startsWith("#")) {
     return;
   }
@@ -328,11 +357,28 @@ function addResolvedUrl(urls: Set<string>, rawUrl: string | undefined, baseUrl: 
     const url = new URL(rawUrl, baseUrl);
 
     if (url.protocol === "http:" || url.protocol === "https:") {
-      urls.add(url.toString());
+      const resolvedUrl = url.toString();
+      const existingLink = linksByUrl.get(resolvedUrl);
+
+      if (!existingLink) {
+        linksByUrl.set(resolvedUrl, {
+          ...link,
+          url: resolvedUrl,
+        });
+      }
     }
   } catch {
     return;
   }
+}
+
+function cleanText(rawText: string | undefined) {
+  const text = (rawText ?? "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return text.length > 0 ? text.slice(0, 160) : undefined;
 }
 
 function isHtmlContent(contentType: string | undefined) {

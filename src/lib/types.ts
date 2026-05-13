@@ -72,11 +72,20 @@ export type Resource = {
   crawl: ResourceCrawlConfig;
 };
 
+export type LinkEvidence = {
+  sourceUrl: string;
+  targetUrl: string;
+  context: string;
+  anchorText?: string;
+  discoveredAt?: string;
+};
+
 export type ManualEdge = {
   from: string;
   to: string;
   type: ManualEdgeType;
   note?: string;
+  evidence?: LinkEvidence[];
 };
 
 export type FoundEdgeSnapshot = {
@@ -85,6 +94,9 @@ export type FoundEdgeSnapshot = {
   sourceUrl: string;
   linkUrl: string;
   normalizedLinkUrl: string;
+  anchorText?: string;
+  context?: string;
+  discoveredAt?: string;
 };
 
 export type PageStatusSnapshot = {

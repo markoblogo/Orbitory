@@ -1,6 +1,6 @@
 # Orbitory
 
-Orbitory is a local-first personal ecosystem map for owned and partner websites, blogs, social profiles, channels, directories, and related online resources. It helps you keep an inspectable inventory of resources, see how they link to each other, find obvious gaps, and generate a deterministic local snapshot of crawl results.
+Orbitory is a local-first personal ecosystem map for owned and partner websites, blogs, social profiles, channels, directories, platform profiles, and related online destinations. It helps you keep an inspectable inventory of coarse ecosystem resources, see how they link to each other, find obvious gaps, and generate a deterministic local snapshot of crawl results.
 
 The eventual public surface can live at `orbitory.abvx.xyz`, but the current app is an MVP intended for local use and safe public-preview experiments.
 
@@ -8,6 +8,7 @@ The eventual public surface can live at `orbitory.abvx.xyz`, but the current app
 
 - A local inventory of known resources.
 - A deterministic graph of configured resources and known links.
+- A coarse resource model where a resource is a domain, site, platform profile, publication profile, channel, or major destination.
 - A bounded crawler for explicitly listed URLs only.
 - A dashboard for broken pages, redirects, missing links, and recommendations.
 - A public-safe curated map at `/public` for resources explicitly marked public.
@@ -24,6 +25,7 @@ The eventual public surface can live at `orbitory.abvx.xyz`, but the current app
 ## Current MVP Scope
 
 - Store projects, resources, and manual edges in local YAML.
+- Model internal pages, books, articles, and repositories as link evidence, not graph nodes.
 - Validate data strictly with zod.
 - Load private local data from `data/resources.local.yaml` when present.
 - Render an interactive private dashboard at `/`.
@@ -92,8 +94,10 @@ npm run test
 Data lives in YAML and has three top-level collections:
 
 - `projects`: groups of related resources.
-- `resources`: websites, profiles, channels, directories, and other known URLs.
-- `manualEdges`: known or intended relationships between resources.
+- `resources`: coarse ecosystem nodes such as domains, websites, profiles, channels, publications, marketplaces, and major public destinations.
+- `manualEdges`: known or intended relationships between coarse resources.
+
+Do not model internal pages, individual articles, individual books, individual PDFs/downloads, or individual GitHub repositories as resources unless they are intentionally promoted to standalone ecosystem destinations. Represent those details as edge evidence, tags, notes, or context.
 
 Project fields:
 
@@ -125,6 +129,15 @@ Manual edge fields:
 - `to`
 - `type`: `intended`, `known`, `partner`, `owned-by`, or `related`
 - `note`
+- `evidence`: optional list of supporting links
+
+Edge evidence fields:
+
+- `sourceUrl`
+- `targetUrl`
+- `context`
+- `anchorText`
+- `discoveredAt`
 
 `visibility` defaults to `private` for projects and resources when omitted.
 
@@ -161,9 +174,14 @@ resources:
 
 manualEdges:
   - from: example-home
-    to: example-home
-    type: related
-    note: Self-reference only for demonstrating shape.
+    to: example-blog
+    type: known
+    note: Example homepage links to the blog.
+    evidence:
+      - sourceUrl: https://example.com/writing
+        targetUrl: https://blog.example.com/
+        context: Internal writing page links to the blog profile.
+        anchorText: Read the blog
 ```
 
 The checked-in `data/resources.yaml` contains fake `.example` demo data and is safe to commit.
@@ -179,6 +197,8 @@ Recommended workflow:
 3. Run `npm run validate:data` before crawling or committing.
 4. Check `git status` before every commit.
 5. Never commit URLs, notes, or partner data that should stay private.
+
+The validator prints non-fatal granularity warnings when resources look too detailed for the coarse model, for example internal pages under a known domain, individual book/article/download pages, or GitHub repository URLs under `github.com/markoblogo/*`.
 
 The `.gitignore` also excludes local/private YAML variants and local/private snapshot variants.
 
@@ -203,6 +223,7 @@ The crawler:
 - fetches the main `url` and explicit `crawl.paths`;
 - does not recursively follow discovered links;
 - uses plain HTTP fetch with timeouts;
+- aggregates multiple discovered links between the same resource pair into one graph edge;
 - records errors in `data/snapshots/latest.json`;
 - does not use browser automation or external SEO APIs.
 

@@ -1,190 +1,127 @@
 {
-  "generatedAt": "2026-05-13T20:28:24.905Z",
-  "resourcesChecked": 5,
-  "pagesFetched": 10,
-  "foundEdges": [],
-  "pageStatuses": [
+  "generatedAt": "2026-05-13T20:52:26.625Z",
+  "resourcesChecked": 1,
+  "pagesFetched": 4,
+  "foundEdges": [
     {
-      "resourceId": "atlas-blog",
-      "requestedUrl": "https://blog.atlas-labs.example/",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND blog.atlas-labs.example"
+      "from": "abvx-home",
+      "to": "github-markoblogo",
+      "sourceUrl": "https://abvx.xyz/",
+      "linkUrl": "https://github.com/markoblogo",
+      "normalizedLinkUrl": "https://github.com/markoblogo",
+      "context": "href",
+      "discoveredAt": "2026-05-13T20:52:26.625Z"
     },
     {
-      "resourceId": "atlas-blog",
-      "requestedUrl": "https://blog.atlas-labs.example/archive",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND blog.atlas-labs.example"
+      "from": "abvx-home",
+      "to": "github-markoblogo",
+      "sourceUrl": "https://abvx.xyz/books",
+      "linkUrl": "https://github.com/markoblogo",
+      "normalizedLinkUrl": "https://github.com/markoblogo",
+      "context": "href",
+      "discoveredAt": "2026-05-13T20:52:26.625Z"
     },
     {
-      "resourceId": "atlas-home",
-      "requestedUrl": "https://demo.atlas-labs.example/",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
+      "from": "abvx-home",
+      "to": "github-markoblogo",
+      "sourceUrl": "https://abvx.xyz/systems",
+      "linkUrl": "https://github.com/markoblogo",
+      "normalizedLinkUrl": "https://github.com/markoblogo",
+      "context": "href",
+      "discoveredAt": "2026-05-13T20:52:26.625Z"
     },
     {
-      "resourceId": "atlas-home",
-      "requestedUrl": "https://demo.atlas-labs.example/contact",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
+      "from": "abvx-home",
+      "to": "github-markoblogo",
+      "sourceUrl": "https://abvx.xyz/writing",
+      "linkUrl": "https://github.com/markoblogo",
+      "normalizedLinkUrl": "https://github.com/markoblogo",
+      "context": "href",
+      "discoveredAt": "2026-05-13T20:52:26.625Z"
     },
     {
-      "resourceId": "atlas-home",
-      "requestedUrl": "https://demo.atlas-labs.example/projects",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
+      "from": "abvx-home",
+      "to": "substack-publication",
+      "sourceUrl": "https://abvx.xyz/",
+      "linkUrl": "https://abvx.substack.com/",
+      "normalizedLinkUrl": "https://abvx.substack.com/",
+      "context": "href",
+      "discoveredAt": "2026-05-13T20:52:26.625Z"
     },
     {
-      "resourceId": "northstar-home",
-      "requestedUrl": "https://northstar-notes.example/",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
+      "from": "abvx-home",
+      "to": "substack-publication",
+      "sourceUrl": "https://abvx.xyz/books",
+      "linkUrl": "https://abvx.substack.com/",
+      "normalizedLinkUrl": "https://abvx.substack.com/",
+      "context": "href",
+      "discoveredAt": "2026-05-13T20:52:26.625Z"
     },
     {
-      "resourceId": "northstar-home",
-      "requestedUrl": "https://northstar-notes.example/about",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
+      "from": "abvx-home",
+      "to": "substack-publication",
+      "sourceUrl": "https://abvx.xyz/systems",
+      "linkUrl": "https://abvx.substack.com/",
+      "normalizedLinkUrl": "https://abvx.substack.com/",
+      "context": "href",
+      "discoveredAt": "2026-05-13T20:52:26.625Z"
     },
     {
-      "resourceId": "northstar-home",
-      "requestedUrl": "https://northstar-notes.example/notes",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
-    },
-    {
-      "resourceId": "northstar-newsletter",
-      "requestedUrl": "https://dispatch.northstar-notes.example/",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND dispatch.northstar-notes.example"
-    },
-    {
-      "resourceId": "orbitory-landing",
-      "requestedUrl": "https://orbitory-demo.example/",
-      "ok": false,
-      "redirected": false,
-      "linksExtracted": 0,
-      "knownLinksFound": 0,
-      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND orbitory-demo.example"
+      "from": "abvx-home",
+      "to": "substack-publication",
+      "sourceUrl": "https://abvx.xyz/writing",
+      "linkUrl": "https://abvx.substack.com/",
+      "normalizedLinkUrl": "https://abvx.substack.com/",
+      "anchorText": "Substack archive -&gt;",
+      "context": "href",
+      "discoveredAt": "2026-05-13T20:52:26.625Z"
     }
   ],
-  "issues": [
+  "pageStatuses": [
     {
-      "type": "fetch_error",
-      "resourceId": "atlas-blog",
-      "url": "https://blog.atlas-labs.example/",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND blog.atlas-labs.example"
+      "resourceId": "abvx-home",
+      "requestedUrl": "https://abvx.xyz/",
+      "finalUrl": "https://abvx.xyz/",
+      "status": 200,
+      "ok": true,
+      "redirected": false,
+      "contentType": "text/html; charset=utf-8",
+      "linksExtracted": 24,
+      "knownLinksFound": 2
     },
     {
-      "type": "fetch_error",
-      "resourceId": "atlas-blog",
-      "url": "https://blog.atlas-labs.example/archive",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND blog.atlas-labs.example"
+      "resourceId": "abvx-home",
+      "requestedUrl": "https://abvx.xyz/books",
+      "finalUrl": "https://abvx.xyz/books",
+      "status": 200,
+      "ok": true,
+      "redirected": false,
+      "contentType": "text/html; charset=utf-8",
+      "linksExtracted": 130,
+      "knownLinksFound": 2
     },
     {
-      "type": "resource_not_crawled",
-      "resourceId": "atlas-blog",
-      "url": "https://blog.atlas-labs.example/",
-      "message": "No configured pages could be crawled for resource \"atlas-blog\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
+      "resourceId": "abvx-home",
+      "requestedUrl": "https://abvx.xyz/systems",
+      "finalUrl": "https://abvx.xyz/systems",
+      "status": 200,
+      "ok": true,
+      "redirected": false,
+      "contentType": "text/html; charset=utf-8",
+      "linksExtracted": 97,
+      "knownLinksFound": 2
     },
     {
-      "type": "fetch_error",
-      "resourceId": "atlas-home",
-      "url": "https://demo.atlas-labs.example/",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
-    },
-    {
-      "type": "fetch_error",
-      "resourceId": "atlas-home",
-      "url": "https://demo.atlas-labs.example/contact",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
-    },
-    {
-      "type": "fetch_error",
-      "resourceId": "atlas-home",
-      "url": "https://demo.atlas-labs.example/projects",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
-    },
-    {
-      "type": "resource_not_crawled",
-      "resourceId": "atlas-home",
-      "url": "https://demo.atlas-labs.example/",
-      "message": "No configured pages could be crawled for resource \"atlas-home\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
-    },
-    {
-      "type": "fetch_error",
-      "resourceId": "northstar-home",
-      "url": "https://northstar-notes.example/",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
-    },
-    {
-      "type": "fetch_error",
-      "resourceId": "northstar-home",
-      "url": "https://northstar-notes.example/about",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
-    },
-    {
-      "type": "fetch_error",
-      "resourceId": "northstar-home",
-      "url": "https://northstar-notes.example/notes",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
-    },
-    {
-      "type": "resource_not_crawled",
-      "resourceId": "northstar-home",
-      "url": "https://northstar-notes.example/",
-      "message": "No configured pages could be crawled for resource \"northstar-home\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
-    },
-    {
-      "type": "fetch_error",
-      "resourceId": "northstar-newsletter",
-      "url": "https://dispatch.northstar-notes.example/",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND dispatch.northstar-notes.example"
-    },
-    {
-      "type": "resource_not_crawled",
-      "resourceId": "northstar-newsletter",
-      "url": "https://dispatch.northstar-notes.example/",
-      "message": "No configured pages could be crawled for resource \"northstar-newsletter\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
-    },
-    {
-      "type": "fetch_error",
-      "resourceId": "orbitory-landing",
-      "url": "https://orbitory-demo.example/",
-      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND orbitory-demo.example"
-    },
-    {
-      "type": "resource_not_crawled",
-      "resourceId": "orbitory-landing",
-      "url": "https://orbitory-demo.example/",
-      "message": "No configured pages could be crawled for resource \"orbitory-landing\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
+      "resourceId": "abvx-home",
+      "requestedUrl": "https://abvx.xyz/writing",
+      "finalUrl": "https://abvx.xyz/writing",
+      "status": 200,
+      "ok": true,
+      "redirected": false,
+      "contentType": "text/html; charset=utf-8",
+      "linksExtracted": 51,
+      "knownLinksFound": 2
     }
-  ]
+  ],
+  "issues": []
 }

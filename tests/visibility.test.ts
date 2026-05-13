@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import path from "node:path";
+import { loadResources } from "../src/lib/loadResources";
 import { filterPublicData } from "../src/lib/visibility";
 import type { OrbitoryData, Resource } from "../src/lib/types";
 
@@ -28,6 +30,14 @@ test("filterPublicData removes edges touching private or unlisted resources", ()
       type: "known",
     },
   ]);
+});
+
+test("demo data includes public resources for the public ecosystem map", () => {
+  const demoData = loadResources(path.join(process.cwd(), "data", "resources.yaml"));
+  const publicData = filterPublicData(demoData);
+
+  assert.ok(publicData.projects.length > 0);
+  assert.ok(publicData.resources.length > 0);
 });
 
 function makeVisibilityData(): OrbitoryData {

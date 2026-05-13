@@ -45,11 +45,20 @@ export const resourceSchema = z.object({
   }),
 });
 
+export const linkEvidenceSchema = z.object({
+  sourceUrl: z.url("Evidence sourceUrl must be a valid absolute URL"),
+  targetUrl: z.url("Evidence targetUrl must be a valid absolute URL"),
+  context: z.string().trim().min(1, "Evidence context is required"),
+  anchorText: z.string().trim().min(1).optional(),
+  discoveredAt: z.iso.datetime().optional(),
+});
+
 export const manualEdgeSchema = z.object({
   from: idSchema,
   to: idSchema,
   type: z.enum(manualEdgeTypes),
   note: z.string().trim().min(1).optional(),
+  evidence: z.array(linkEvidenceSchema).default([]),
 });
 
 export const orbitoryDataSchema = z

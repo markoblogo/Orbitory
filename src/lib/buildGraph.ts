@@ -1,5 +1,6 @@
 import type {
   CrawlSnapshot,
+  LinkEvidence,
   ManualEdge,
   OrbitoryData,
   PageStatusSnapshot,
@@ -39,6 +40,8 @@ export type GraphEdge = {
   category: EdgeCategory;
   note?: string;
   sourceUrl?: string;
+  evidence: LinkEvidence[];
+  linkCount: number;
 };
 
 export type GraphIssue = {
@@ -136,6 +139,13 @@ function buildEdges(
     .filter((edge) => resourceIds.has(edge.from) && resourceIds.has(edge.to))
     .forEach((edge) => {
       const key = edgeKey(edge.from, edge.to);
+      const existingEdge = graphEdges.get(key);
+
+      if (existingEdge) {
+        existingEdge.evidence.push(...(edge.evidence ?? []));
+        existingEdge.linkCount = Math.max(1, existingEdge.evidence.length);
+        return;
+      }
 
       graphEdges.set(key, {
         id: key,
@@ -144,6 +154,8 @@ function buildEdges(
         type: edge.type,
         category: foundEdgeKeys.has(key) ? "both" : "manual",
         note: edge.note,
+        evidence: edge.evidence ?? [],
+        linkCount: Math.max(1, edge.evidence?.length ?? 0),
       });
     });
 
@@ -153,8 +165,23 @@ function buildEdges(
     }
 
     const key = edgeKey(edge.from, edge.to);
+    const evidence: LinkEvidence = {
+      sourceUrl: edge.sourceUrl,
+      targetUrl: edge.linkUrl,
+      context: edge.context ?? "crawler",
+      anchorText: edge.anchorText,
+      discoveredAt: edge.discoveredAt ?? snapshot?.generatedAt,
+    };
 
     if (graphEdges.has(key)) {
+      const existingEdge = graphEdges.get(key);
+
+      if (existingEdge) {
+        existingEdge.category =
+          existingEdge.category === "manual" ? "both" : existingEdge.category;
+        existingEdge.evidence.push(evidence);
+        existingEdge.linkCount = Math.max(1, existingEdge.evidence.length);
+      }
       continue;
     }
 
@@ -165,6 +192,8 @@ function buildEdges(
       type: "found",
       category: "found",
       sourceUrl: edge.sourceUrl,
+      evidence: [evidence],
+      linkCount: 1,
     });
   }
 
@@ -182,6 +211,8 @@ function buildEdges(
       category: "broken",
       note: issue.message,
       sourceUrl: issue.url,
+      evidence: [],
+      linkCount: 1,
     });
   }
 
@@ -206,6 +237,8 @@ function buildRecommendedEdges(
       type: "recommended" as const,
       category: "recommended" as const,
       note: recommendation.reason,
+      evidence: [],
+      linkCount: 1,
     }))
     .sort(sortGraphEdges);
 }
