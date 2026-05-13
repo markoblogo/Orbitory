@@ -19,7 +19,7 @@ export function loadResources(dataPath = getDefaultResourcesPath()): OrbitoryDat
     fileContents = readFileSync(dataPath, "utf8");
   } catch (error) {
     throw new Error(
-      `Could not read Orbitory data file at ${dataPath}: ${getErrorMessage(error)}`,
+      `Could not read Orbitory data file at ${dataPath}: ${getErrorMessage(error)}\nCheck that the file exists and is readable. For private data, use data/resources.local.yaml.`,
     );
   }
 
@@ -29,7 +29,7 @@ export function loadResources(dataPath = getDefaultResourcesPath()): OrbitoryDat
     parsedYaml = parse(fileContents);
   } catch (error) {
     throw new Error(
-      `Could not parse Orbitory YAML at ${dataPath}: ${getErrorMessage(error)}`,
+      `Could not parse Orbitory YAML at ${dataPath}: ${getErrorMessage(error)}\nFix the YAML syntax, then run npm run validate:data again.`,
     );
   }
 
@@ -84,7 +84,7 @@ function formatValidationError(dataPath: string, error: ZodError): string {
     })
     .join("\n");
 
-  return `Invalid Orbitory data in ${dataPath}:\n${issues}`;
+  return `Invalid Orbitory data in ${dataPath}:\n${issues}\n\nFix the fields above, then run npm run validate:data again.`;
 }
 
 function getErrorMessage(error: unknown): string {

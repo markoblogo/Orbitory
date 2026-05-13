@@ -86,39 +86,48 @@ export default function Home() {
           title="Resources by project"
           description="This list is loaded from the local YAML dataset and grouped by configured project."
         >
-          <div className="grid gap-4 lg:grid-cols-3">
-            {resourceGroups.map((group) => (
-              <div
-                key={group.project?.id ?? "unassigned"}
-                className="rounded-md border border-[#d8d1c4] bg-[#fcfaf4] p-4"
-              >
-                <h3 className="font-medium">
-                  {group.project?.name ?? "Unassigned"}
-                </h3>
-                {group.project?.description ? (
-                  <p className="mt-1 text-sm leading-6 text-[#6f6658]">
-                    {group.project.description}
-                  </p>
-                ) : null}
-                <ul className="mt-4 space-y-3">
-                  {group.resources.map((resource) => (
-                    <li key={resource.id}>
-                      <a
-                        className="text-sm font-medium underline-offset-4 hover:underline"
-                        href={resource.url}
-                      >
-                        {resource.name}
-                      </a>
-                      <p className="mt-1 text-xs uppercase tracking-wide text-[#8c8170]">
-                        {resource.type} / {resource.owner} /{" "}
-                        {resource.priority}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {resourceGroups.length > 0 ? (
+            <div className="grid gap-4 lg:grid-cols-3">
+              {resourceGroups.map((group) => (
+                <div
+                  key={group.project?.id ?? "unassigned"}
+                  className="rounded-md border border-[#d8d1c4] bg-[#fcfaf4] p-4"
+                >
+                  <h3 className="font-medium">
+                    {group.project?.name ?? "Unassigned"}
+                  </h3>
+                  {group.project?.description ? (
+                    <p className="mt-1 text-sm leading-6 text-[#6f6658]">
+                      {group.project.description}
+                    </p>
+                  ) : null}
+                  <ul className="mt-4 space-y-3">
+                    {group.resources.map((resource) => (
+                      <li key={resource.id}>
+                        <a
+                          className="break-words text-sm font-medium underline-offset-4 hover:underline"
+                          href={resource.url}
+                        >
+                          {resource.name}
+                        </a>
+                        <p className="mt-1 text-xs uppercase tracking-wide text-[#8c8170]">
+                          {resource.type} / {resource.owner} /{" "}
+                          {resource.priority}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="rounded-md border border-[#d8d1c4] bg-[#fcfaf4] p-4 text-sm text-[#6f6658]">
+              No resources are configured yet. Add resources to
+              <code className="font-mono"> data/resources.yaml</code> or
+              <code className="font-mono"> data/resources.local.yaml</code>,
+              then run <code className="font-mono">npm run validate:data</code>.
+            </p>
+          )}
         </DashboardSection>
       </div>
     </main>

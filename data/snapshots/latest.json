@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T19:36:56.027Z",
+  "generatedAt": "2026-05-13T20:28:24.905Z",
   "resourcesChecked": 5,
   "pagesFetched": 10,
   "foundEdges": [],
@@ -11,7 +11,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND blog.atlas-labs.example"
     },
     {
       "resourceId": "atlas-blog",
@@ -20,7 +20,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND blog.atlas-labs.example"
     },
     {
       "resourceId": "atlas-home",
@@ -29,7 +29,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
     },
     {
       "resourceId": "atlas-home",
@@ -38,7 +38,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
     },
     {
       "resourceId": "atlas-home",
@@ -47,7 +47,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
     },
     {
       "resourceId": "northstar-home",
@@ -56,7 +56,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
     },
     {
       "resourceId": "northstar-home",
@@ -65,7 +65,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
     },
     {
       "resourceId": "northstar-home",
@@ -74,7 +74,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
     },
     {
       "resourceId": "northstar-newsletter",
@@ -83,7 +83,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND dispatch.northstar-notes.example"
     },
     {
       "resourceId": "orbitory-landing",
@@ -92,7 +92,7 @@
       "redirected": false,
       "linksExtracted": 0,
       "knownLinksFound": 0,
-      "error": "fetch failed"
+      "error": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND orbitory-demo.example"
     }
   ],
   "issues": [
@@ -100,91 +100,91 @@
       "type": "fetch_error",
       "resourceId": "atlas-blog",
       "url": "https://blog.atlas-labs.example/",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND blog.atlas-labs.example"
     },
     {
       "type": "fetch_error",
       "resourceId": "atlas-blog",
       "url": "https://blog.atlas-labs.example/archive",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND blog.atlas-labs.example"
     },
     {
       "type": "resource_not_crawled",
       "resourceId": "atlas-blog",
       "url": "https://blog.atlas-labs.example/",
-      "message": "No configured pages could be crawled for resource \"atlas-blog\"."
+      "message": "No configured pages could be crawled for resource \"atlas-blog\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
     },
     {
       "type": "fetch_error",
       "resourceId": "atlas-home",
       "url": "https://demo.atlas-labs.example/",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
     },
     {
       "type": "fetch_error",
       "resourceId": "atlas-home",
       "url": "https://demo.atlas-labs.example/contact",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
     },
     {
       "type": "fetch_error",
       "resourceId": "atlas-home",
       "url": "https://demo.atlas-labs.example/projects",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND demo.atlas-labs.example"
     },
     {
       "type": "resource_not_crawled",
       "resourceId": "atlas-home",
       "url": "https://demo.atlas-labs.example/",
-      "message": "No configured pages could be crawled for resource \"atlas-home\"."
+      "message": "No configured pages could be crawled for resource \"atlas-home\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
     },
     {
       "type": "fetch_error",
       "resourceId": "northstar-home",
       "url": "https://northstar-notes.example/",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
     },
     {
       "type": "fetch_error",
       "resourceId": "northstar-home",
       "url": "https://northstar-notes.example/about",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
     },
     {
       "type": "fetch_error",
       "resourceId": "northstar-home",
       "url": "https://northstar-notes.example/notes",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND northstar-notes.example"
     },
     {
       "type": "resource_not_crawled",
       "resourceId": "northstar-home",
       "url": "https://northstar-notes.example/",
-      "message": "No configured pages could be crawled for resource \"northstar-home\"."
+      "message": "No configured pages could be crawled for resource \"northstar-home\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
     },
     {
       "type": "fetch_error",
       "resourceId": "northstar-newsletter",
       "url": "https://dispatch.northstar-notes.example/",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND dispatch.northstar-notes.example"
     },
     {
       "type": "resource_not_crawled",
       "resourceId": "northstar-newsletter",
       "url": "https://dispatch.northstar-notes.example/",
-      "message": "No configured pages could be crawled for resource \"northstar-newsletter\"."
+      "message": "No configured pages could be crawled for resource \"northstar-newsletter\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
     },
     {
       "type": "fetch_error",
       "resourceId": "orbitory-landing",
       "url": "https://orbitory-demo.example/",
-      "message": "fetch failed"
+      "message": "fetch failed. Cause: Error: getaddrinfo ENOTFOUND orbitory-demo.example"
     },
     {
       "type": "resource_not_crawled",
       "resourceId": "orbitory-landing",
       "url": "https://orbitory-demo.example/",
-      "message": "No configured pages could be crawled for resource \"orbitory-landing\"."
+      "message": "No configured pages could be crawled for resource \"orbitory-landing\". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched."
     }
   ]
 }

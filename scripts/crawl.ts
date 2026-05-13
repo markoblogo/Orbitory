@@ -60,6 +60,9 @@ type CrawlSnapshot = {
 async function main() {
   const data = loadResources(DATA_PATH);
   const targets = buildCrawlTargets(data);
+  const crawlEnabledResourceCount = data.resources.filter(
+    (resource) => resource.crawl.enabled,
+  ).length;
   const matchKnownResource = createKnownResourceMatcher(data.resources);
   const foundEdges = new Map<string, FoundEdge>();
   const pageStatuses: PageStatus[] = [];
@@ -117,14 +120,14 @@ async function main() {
           type: "resource_not_crawled",
           resourceId: resource.id,
           url: resource.url,
-          message: `No configured pages could be crawled for resource "${resource.id}".`,
+          message: `No configured pages could be crawled for resource "${resource.id}". Check DNS/network access, robots/login/captcha barriers, or set crawl.enabled=false if this resource should not be fetched.`,
         });
       }
     });
 
   const snapshot: CrawlSnapshot = {
     generatedAt: new Date().toISOString(),
-    resourcesChecked: data.resources.filter((resource) => resource.crawl.enabled).length,
+    resourcesChecked: crawlEnabledResourceCount,
     pagesFetched: pageStatuses.length,
     foundEdges: [...foundEdges.values()].sort(sortFoundEdges),
     pageStatuses: pageStatuses.sort(sortPageStatuses),
@@ -134,7 +137,10 @@ async function main() {
   mkdirSync(path.dirname(SNAPSHOT_PATH), { recursive: true });
   writeFileSync(SNAPSHOT_PATH, `${JSON.stringify(snapshot, null, 2)}\n`);
   console.log(
-    `Wrote ${path.relative(process.cwd(), SNAPSHOT_PATH)}: ${snapshot.resourcesChecked} resources, ${snapshot.pagesFetched} pages, ${snapshot.foundEdges.length} found edges, ${snapshot.issues.length} issues.`,
+    `Crawled ${snapshot.pagesFetched} explicitly configured page targets from ${snapshot.resourcesChecked} crawl-enabled resources. No discovered links were followed.`,
+  );
+  console.log(
+    `Wrote ${path.relative(process.cwd(), SNAPSHOT_PATH)}: ${snapshot.foundEdges.length} found edges, ${snapshot.issues.length} issues.`,
   );
 }
 
@@ -366,7 +372,13 @@ function getErrorMessage(error: unknown): string {
     return `Fetch timed out after ${FETCH_TIMEOUT_MS}ms.`;
   }
 
-  return error instanceof Error ? error.message : String(error);
+  if (error instanceof Error) {
+    const cause =
+      "cause" in error && error.cause ? ` Cause: ${String(error.cause)}` : "";
+    return `${error.message}.${cause}`;
+  }
+
+  return String(error);
 }
 
 main().catch((error) => {
