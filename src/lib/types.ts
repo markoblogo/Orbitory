@@ -35,16 +35,20 @@ export const manualEdgeTypes = [
   "related",
 ] as const;
 
+export const visibilityLevels = ["private", "public", "unlisted"] as const;
+
 export type ResourceType = (typeof resourceTypes)[number];
 export type ResourceOwner = (typeof resourceOwners)[number];
 export type ResourcePriority = (typeof resourcePriorities)[number];
 export type ResourceStatus = (typeof resourceStatuses)[number];
 export type ManualEdgeType = (typeof manualEdgeTypes)[number];
+export type Visibility = (typeof visibilityLevels)[number];
 
 export type Project = {
   id: string;
   name: string;
   description?: string;
+  visibility: Visibility;
   tags: string[];
 };
 
@@ -60,6 +64,7 @@ export type Resource = {
   type: ResourceType;
   projectId?: string;
   owner: ResourceOwner;
+  visibility: Visibility;
   priority: ResourcePriority;
   status: ResourceStatus;
   editable: boolean;

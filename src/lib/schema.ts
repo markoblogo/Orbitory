@@ -5,6 +5,7 @@ import {
   resourcePriorities,
   resourceStatuses,
   resourceTypes,
+  visibilityLevels,
 } from "./types";
 
 const idSchema = z
@@ -22,6 +23,7 @@ export const projectSchema = z.object({
   id: idSchema,
   name: z.string().trim().min(1, "Project name is required"),
   description: z.string().trim().min(1).optional(),
+  visibility: z.enum(visibilityLevels).default("private"),
   tags: stringArraySchema,
 });
 
@@ -32,6 +34,7 @@ export const resourceSchema = z.object({
   type: z.enum(resourceTypes),
   projectId: idSchema.optional(),
   owner: z.enum(resourceOwners),
+  visibility: z.enum(visibilityLevels).default("private"),
   priority: z.enum(resourcePriorities),
   status: z.enum(resourceStatuses),
   editable: z.boolean(),

@@ -8,6 +8,10 @@ import type {
   ResourceOwner,
   ResourceType,
 } from "./types";
+import {
+  generateRecommendations,
+  type Recommendation,
+} from "./recommendations";
 
 export type EdgeCategory = "manual" | "found" | "both" | "broken" | "recommended";
 export type CrawlStatus = "OK" | "redirected" | "broken" | "fetch error" | "not crawled";
@@ -16,7 +20,8 @@ export type GraphIssueCategory =
   | "broken_outbound_ecosystem_link"
   | "no_incoming_links"
   | "no_outgoing_links"
-  | "manual_edge_not_found";
+  | "manual_edge_not_found"
+  | "recommendation";
 
 export type GraphNode = {
   id: string;
@@ -43,6 +48,7 @@ export type GraphIssue = {
   message: string;
   relatedResourceId?: string;
   url?: string;
+  recommendation?: Recommendation;
 };
 
 export type SnapshotSummary = {
@@ -64,10 +70,16 @@ export type EcosystemGraph = {
   owners: ResourceOwner[];
 };
 
+type BuildGraphOptions = {
+  includeRecommendations?: boolean;
+};
+
 export function buildGraph(
   data: OrbitoryData,
   snapshot: CrawlSnapshot | null = null,
+  options: BuildGraphOptions = {},
 ): EcosystemGraph {
+  const includeRecommendations = options.includeRecommendations ?? true;
   const projectsById = new Map(
     data.projects.map((project) => [project.id, project]),
   );
@@ -85,11 +97,16 @@ export function buildGraph(
   }));
 
   const edges = buildEdges(data.manualEdges, snapshot, resourceIds);
-  const issues = buildIssues(data, snapshot, edges);
+  const recommendations = includeRecommendations
+    ? generateRecommendations(data, snapshot)
+    : [];
+  const recommendedEdges = buildRecommendedEdges(recommendations, resourceIds);
+  const allEdges = [...edges, ...recommendedEdges].sort(sortGraphEdges);
+  const issues = buildIssues(data, snapshot, allEdges, recommendations);
 
   return {
     nodes,
-    edges,
+    edges: allEdges,
     issues,
     snapshotSummary: {
       available: Boolean(snapshot),
@@ -168,18 +185,36 @@ function buildEdges(
     });
   }
 
-  return [...graphEdges.values()].sort(
-    (first, second) =>
-      first.from.localeCompare(second.from) ||
-      first.to.localeCompare(second.to) ||
-      first.category.localeCompare(second.category),
-  );
+  return [...graphEdges.values()].sort(sortGraphEdges);
+}
+
+function buildRecommendedEdges(
+  recommendations: Recommendation[],
+  resourceIds: Set<string>,
+): GraphEdge[] {
+  return recommendations
+    .filter(
+      (recommendation) =>
+        resourceIds.has(recommendation.from) &&
+        resourceIds.has(recommendation.to) &&
+        recommendation.from !== recommendation.to,
+    )
+    .map((recommendation) => ({
+      id: `recommended--${recommendation.id}`,
+      from: recommendation.from,
+      to: recommendation.to,
+      type: "recommended" as const,
+      category: "recommended" as const,
+      note: recommendation.reason,
+    }))
+    .sort(sortGraphEdges);
 }
 
 function buildIssues(
   data: OrbitoryData,
   snapshot: CrawlSnapshot | null,
   edges: GraphEdge[],
+  recommendations: Recommendation[],
 ): GraphIssue[] {
   const issues: GraphIssue[] = [];
   const resourcesById = new Map(
@@ -253,11 +288,30 @@ function buildIssues(
     }
   }
 
+  for (const recommendation of recommendations) {
+    issues.push({
+      category: "recommendation",
+      resourceId: recommendation.from,
+      relatedResourceId: recommendation.to,
+      title: recommendation.type.replaceAll("_", " "),
+      message: recommendation.reason,
+      recommendation,
+    });
+  }
+
   return issues.sort(
     (first, second) =>
       first.category.localeCompare(second.category) ||
       first.resourceId.localeCompare(second.resourceId) ||
       first.title.localeCompare(second.title),
+  );
+}
+
+function sortGraphEdges(first: GraphEdge, second: GraphEdge) {
+  return (
+    first.from.localeCompare(second.from) ||
+    first.to.localeCompare(second.to) ||
+    first.category.localeCompare(second.category)
   );
 }
 

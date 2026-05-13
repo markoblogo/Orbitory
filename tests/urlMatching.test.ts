@@ -14,6 +14,7 @@ const baseResource: Resource = {
   type: "website",
   projectId: "atlas",
   owner: "mine",
+  visibility: "public",
   priority: "high",
   status: "active",
   editable: true,

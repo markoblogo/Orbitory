@@ -37,6 +37,9 @@ npm run build
 npm run lint
 npm run typecheck
 npm run validate-data
+npm run validate:data
+npm run crawl
+npm run test
 ```
 
 ## Project Structure
@@ -67,3 +70,17 @@ Validate the active dataset with:
 ```bash
 npm run validate-data
 ```
+
+## Private vs Public Mode
+
+- `/` is the private audit dashboard. It may show private resources, partner/internal data, broken links, crawler issues, owner labels, and recommendations. Do not deploy `/` publicly without authentication or another access control layer.
+- `/public` is the public-safe curated map. It only renders projects and resources marked `visibility: public`; it does not show issues, broken links, recommendations, private notes, or editable flags.
+- `visibility` defaults to `private` for both projects and resources. Mark data as public explicitly before expecting it to appear on `/public`.
+
+## Weekly Snapshots
+
+The workflow at `.github/workflows/weekly-snapshot.yml` runs once per week and can also be started manually from GitHub Actions. It installs dependencies, validates local data, runs the bounded crawler, builds the app, and commits `data/snapshots/latest.json` only when the snapshot changes.
+
+The crawler does not follow arbitrary discovered links. It only fetches resources and paths explicitly configured in `data/resources.yaml`. Individual unreachable resources are recorded in the snapshot as issues instead of crashing the run; data validation failures still fail the workflow clearly.
+
+To disable weekly snapshots, remove or comment out the `schedule` block in `.github/workflows/weekly-snapshot.yml`. Manual runs remain available while `workflow_dispatch` is present.

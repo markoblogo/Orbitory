@@ -2,6 +2,7 @@ projects:
   - id: atlas-labs
     name: Atlas Labs
     description: Demo project for a personal software studio ecosystem.
+    visibility: public
     tags:
       - studio
       - software
@@ -9,6 +10,7 @@ projects:
   - id: northstar-field-notes
     name: Northstar Field Notes
     description: Demo publishing project for essays, videos, and updates.
+    visibility: public
     tags:
       - writing
       - media
@@ -16,6 +18,7 @@ projects:
   - id: orbitory-demo
     name: Orbitory Demo
     description: Public sample data used to exercise the Orbitory MVP.
+    visibility: public
     tags:
       - orbitory
       - sample
@@ -28,6 +31,7 @@ resources:
     type: website
     projectId: atlas-labs
     owner: mine
+    visibility: public
     priority: critical
     status: active
     editable: true
@@ -46,6 +50,7 @@ resources:
     type: blog
     projectId: atlas-labs
     owner: mine
+    visibility: public
     priority: high
     status: active
     editable: true
@@ -63,6 +68,7 @@ resources:
     type: github
     projectId: atlas-labs
     owner: mine
+    visibility: public
     priority: medium
     status: active
     editable: true
@@ -77,6 +83,7 @@ resources:
     type: website
     projectId: northstar-field-notes
     owner: mine
+    visibility: public
     priority: high
     status: active
     editable: true
@@ -95,6 +102,7 @@ resources:
     type: newsletter
     projectId: northstar-field-notes
     owner: mine
+    visibility: public
     priority: medium
     status: active
     editable: true
@@ -111,6 +119,7 @@ resources:
     type: video
     projectId: northstar-field-notes
     owner: external
+    visibility: unlisted
     priority: medium
     status: active
     editable: false
@@ -125,6 +134,7 @@ resources:
     type: landing
     projectId: orbitory-demo
     owner: mine
+    visibility: public
     priority: high
     status: active
     editable: true
@@ -141,6 +151,7 @@ resources:
     type: directory
     projectId: orbitory-demo
     owner: partner
+    visibility: unlisted
     priority: low
     status: unknown
     editable: false

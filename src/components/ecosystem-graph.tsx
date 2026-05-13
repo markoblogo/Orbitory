@@ -65,6 +65,7 @@ export function EcosystemGraphView({ graph }: EcosystemGraphProps) {
   const [typeFilter, setTypeFilter] = useState<ResourceType | "all">("all");
   const [ownerFilter, setOwnerFilter] = useState<ResourceOwner | "all">("all");
   const [showArchived, setShowArchived] = useState(false);
+  const [showRecommendedEdges, setShowRecommendedEdges] = useState(true);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(
     graph.nodes[0]?.id ?? null,
   );
@@ -105,10 +106,14 @@ export function EcosystemGraphView({ graph }: EcosystemGraphProps) {
   );
   const visibleEdges = useMemo(
     () =>
-      graph.edges.filter(
-        (edge) => positionedNodeMap.has(edge.from) && positionedNodeMap.has(edge.to),
-      ),
-    [graph.edges, positionedNodeMap],
+      graph.edges.filter((edge) => {
+        if (edge.category === "recommended" && !showRecommendedEdges) {
+          return false;
+        }
+
+        return positionedNodeMap.has(edge.from) && positionedNodeMap.has(edge.to);
+      }),
+    [graph.edges, positionedNodeMap, showRecommendedEdges],
   );
   const selectedNode =
     (selectedNodeId ? positionedNodeMap.get(selectedNodeId) : undefined) ??
@@ -117,7 +122,7 @@ export function EcosystemGraphView({ graph }: EcosystemGraphProps) {
   return (
     <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
       <div className="space-y-4">
-        <div className="grid gap-3 rounded-md border border-[#d8d1c4] bg-[#fcfaf4] p-4 md:grid-cols-4">
+        <div className="grid gap-3 rounded-md border border-[#d8d1c4] bg-[#fcfaf4] p-4 md:grid-cols-5">
           <label className="space-y-1 text-sm font-medium">
             <span>Project</span>
             <select
@@ -178,6 +183,16 @@ export function EcosystemGraphView({ graph }: EcosystemGraphProps) {
               onChange={(event) => setShowArchived(event.target.checked)}
             />
             <span className="pb-1">Show archived</span>
+          </label>
+
+          <label className="flex items-end gap-2 text-sm font-medium">
+            <input
+              checked={showRecommendedEdges}
+              className="mb-2 size-4 accent-[#161513]"
+              type="checkbox"
+              onChange={(event) => setShowRecommendedEdges(event.target.checked)}
+            />
+            <span className="pb-1">Show recommendations</span>
           </label>
         </div>
 
@@ -541,6 +556,17 @@ export function IssuesPanel({ issues }: { issues: GraphIssue[] }) {
           <p className="mt-1 text-sm leading-6 text-[#6f6658]">
             {issue.message}
           </p>
+          {issue.recommendation ? (
+            <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm">
+              <p className="font-medium text-amber-900">
+                {issue.recommendation.suggestedAction}
+              </p>
+              <p className="mt-2 text-xs uppercase tracking-wide text-amber-800">
+                severity {issue.recommendation.severity} / confidence{" "}
+                {issue.recommendation.confidence} / {issue.recommendation.ruleId}
+              </p>
+            </div>
+          ) : null}
           {issue.url ? (
             <p className="mt-2 break-words text-xs text-[#8c8170]">
               {issue.url}

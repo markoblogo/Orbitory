@@ -9,6 +9,9 @@ import { groupResourcesByProject, loadResources } from "@/lib/loadResources";
 import { loadLatestSnapshot } from "@/lib/loadSnapshot";
 
 export default function Home() {
+  // Private audit dashboard: this route can expose internal resources, crawler
+  // issues, broken links, owner labels, and recommendations. Do not publish `/`
+  // publicly without adding authentication or another access control layer.
   const orbitoryData = loadResources();
   const snapshot = loadLatestSnapshot();
   const graph = buildGraph(orbitoryData, snapshot);
