@@ -32,9 +32,17 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+.env
+.env.local
+.env.*.local
 
 # local private Orbitory data
 /data/resources.local.yaml
+/data/*.local.yaml
+/data/*.private.yaml
+/data/private/
+/data/snapshots/*.local.json
+/data/snapshots/*.private.json
 
 # vercel
 .vercel

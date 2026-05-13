@@ -1,0 +1,65 @@
+projects:
+  - id: example-project
+    name: Example Project
+    description: Safe public demo project.
+    visibility: public
+    tags:
+      - demo
+
+resources:
+  - id: example-home
+    name: Example Home
+    url: https://example.com/
+    type: website
+    projectId: example-project
+    owner: mine
+    visibility: public
+    priority: high
+    status: active
+    editable: true
+    tags:
+      - home
+      - demo
+    crawl:
+      enabled: true
+      paths:
+        - /
+  - id: example-blog
+    name: Example Blog
+    url: https://blog.example.com/
+    type: blog
+    projectId: example-project
+    owner: mine
+    visibility: public
+    priority: medium
+    status: active
+    editable: true
+    tags:
+      - writing
+      - demo
+    crawl:
+      enabled: false
+  - id: example-partner
+    name: Example Partner Listing
+    url: https://partner.example/listings/example
+    type: partner
+    projectId: example-project
+    owner: partner
+    visibility: unlisted
+    priority: low
+    status: active
+    editable: false
+    tags:
+      - partner
+    crawl:
+      enabled: false
+
+manualEdges:
+  - from: example-home
+    to: example-blog
+    type: known
+    note: Example homepage links to the blog.
+  - from: example-home
+    to: example-partner
+    type: partner
+    note: Example unlisted partner relationship.
